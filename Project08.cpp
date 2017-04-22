@@ -92,12 +92,14 @@ void mouse_move()
 		    r = 3; // We move to the left if y is zero.
 		// Last case: loc.x == 1 && loc.y == 2
 		else
-		    r = 2;
+		    r = 2; // Move to the right
 	    }
 	    else
 	    {
 		// Determine which paths are not backtracking (we just came from it)
 		// Pick one of the not-just-traveled-on paths, and go.
+
+		// TODO: Determine a way to handle an open room better
 	    }
 	}
 	// If exit nearby
