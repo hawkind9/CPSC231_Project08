@@ -31,6 +31,8 @@ void mouse_move()
     // This move queue is only in the scope of this function, and it allows us to enqueue commands between runs of this function.
     // Declared static so that we don't erase the data on every run of mouse_move().
     static std::queue<int> move_queue;
+    // Declare our tracker for our last movement.
+    static int last_move = -1;
 
     // Look around
 
@@ -96,5 +98,9 @@ void mouse_move()
     if(r==1) if(mouse_south()) row++;
     if(r==2) if(mouse_east()) col++;
     if(r==3) if(mouse_west()) col--;
+    // Update our last movement tracker. Keep track of the reverse operation of the move we did.
+    // The toggles should work as below:
+    // 0b11 ^ 1 == 0b10; 0b10 ^ 1 == 0b11; 0b01 ^ 1 == 0b00; 0b00 ^ 1 == 0b01
+    r = r ^ 1; // Flip that single bit to toggle north/south or east/west movement
 
 }
