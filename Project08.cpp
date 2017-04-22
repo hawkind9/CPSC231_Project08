@@ -25,8 +25,10 @@ void mouse_move()
     // Initialize the variable so we can tell if we accidentally fell through without choosing a direction
     int r = -1;
     cell map[3][3];
-    // Declare some vectors so we can keep track of where cheese and exits are.
-    std::vector<map_pos> cheese_loc, exit_loc;
+    // Declare some vectors so we can keep track of where cheese and exits are. Also one to determine where to go if nothing else is there
+    std::vector<map_pos> cheese_loc, exit_loc, viable_loc;
+    // Temp variable for determining direction based on the stored location.
+    map_pos loc;
     int i, j;
     // This move queue is only in the scope of this function, and it allows us to enqueue commands between runs of this function.
     // Declared static so that we don't erase the data on every run of mouse_move().
@@ -67,12 +69,36 @@ void mouse_move()
 	// If no cheese nearby and no exits nearby:
 	if (cheese_loc.empty() == true && exit_loc.empty() == true)
 	{
-	    // Determine which paths are not backtracking (we just came from it)
-	    // Pick one of the not-just-traveled-on paths, and go.
-	    // If no other paths, then backtrack
+	    // Figure out which directions are allowable directions
+	    if (map[1][0] == CELL_OPEN)
+		viable_loc.push_back({ 1, 0 });
+	    if (map[0][1] == CELL_OPEN)
+		viable_loc.push_back({ 0, 1 });
+	    if (map[1][2] == CELL_OPEN)
+		viable_loc.push_back({ 1, 2 });
+	    if (map[2][1] == CELL_OPEN)
+		viable_loc.push_back({ 2, 1 });
 
-	    // Remember where we are -- use a static variable
-	    // Update our position
+	    // Only one option, then take it.
+	    if (viable_loc.size() == 1)
+	    {
+		loc = viable_loc[0];
+		if (loc.x == 0)
+		    r = 0; // If x is zero, we are moving up.
+		else if (loc.x == 2)
+		    r = 1; // If x is two, we are moving down.
+		// In these cases, loc.x will be 1
+		else if (loc.y == 0)
+		    r = 3; // We move to the left if y is zero.
+		// Last case: loc.x == 1 && loc.y == 2
+		else
+		    r = 2;
+	    }
+	    else
+	    {
+		// Determine which paths are not backtracking (we just came from it)
+		// Pick one of the not-just-traveled-on paths, and go.
+	    }
 	}
 	// If exit nearby
 	else if (exit_loc.empty() == false)
