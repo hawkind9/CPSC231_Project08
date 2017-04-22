@@ -101,6 +101,6 @@ void mouse_move()
     // Update our last movement tracker. Keep track of the reverse operation of the move we did.
     // The toggles should work as below:
     // 0b11 ^ 1 == 0b10; 0b10 ^ 1 == 0b11; 0b01 ^ 1 == 0b00; 0b00 ^ 1 == 0b01
-    r = r ^ 1; // Flip that single bit to toggle north/south or east/west movement
+    last_move = r ^ 1; // Flip that single bit to toggle north/south or east/west movement
 
 }
