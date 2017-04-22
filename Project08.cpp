@@ -25,7 +25,7 @@ void mouse_move()
     // Initialize the variable so we can tell if we accidentally fell through without choosing a direction
     int r = -1;
     cell map[3][3];
-    // Declare some vectors so we can keep track of 
+    // Declare some vectors so we can keep track of where cheese and exits are.
     std::vector<map_pos> cheese_loc, exit_loc;
     int i, j;
     // This move queue is only in the scope of this function, and it allows us to enqueue commands between runs of this function.
