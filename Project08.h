@@ -34,3 +34,9 @@ bool mouse_north();
 bool mouse_south();
 bool mouse_east();
 bool mouse_west();
+
+// Map position structure for storing relative cheese locations from mouse_look
+struct map_pos
+{
+    int x, y;
+};

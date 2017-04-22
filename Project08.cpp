@@ -1,6 +1,7 @@
 #include "Project08.h"
 #include "Project08.h2"
 #include <queue>
+#include <vector>
 
 /**************************************************************
  * mouse_init()
@@ -24,6 +25,9 @@ void mouse_move()
     // Initialize the variable so we can tell if we accidentally fell through without choosing a direction
     int r = -1;
     cell map[3][3];
+    // Declare some vectors so we can keep track of 
+    std::vector<map_pos> cheese_loc, exit_loc;
+    int i, j;
     // This move queue is only in the scope of this function, and it allows us to enqueue commands between runs of this function.
     // Declared static so that we don't erase the data on every run of mouse_move().
     static std::queue<int> move_queue;
@@ -41,23 +45,47 @@ void mouse_move()
 	move_queue.pop();
     }
     // Otherwise
-	  // If no cheese nearby:
+    else
+    {
+	// Look for all nearby cheeses
+	for (int i = 0; i < 3; ++i)
+	{
+	    for (int j = 0; j < 3; ++j)
+	    {
+		// Keep track of where nearby cheeses are
+		if (map[i][j] == CELL_CHEESE)
+		{
+		    cheese_loc.push_back({ i, j });
+		}
+		// Also track the exits nearby
+		else if (map[i][j] == CELL_EXIT)
+		    exit_loc.push_back({ i, j });
+	    }
+	}
+	// If no cheese nearby and no exits nearby:
+	if (cheese_loc.empty() == true && exit_loc.empty() == true)
+	{
+	    // Determine which paths are not backtracking (we just came from it)
+	    // Pick one of the not-just-traveled-on paths, and go.
+	    // If no other paths, then backtrack
 
-		// Determine which paths are not backtracking (we just came from it)
-		// Pick one of the not-just-traveled-on paths, and go.
-		// If no other paths, then backtrack
-
-		// Remember where we are -- use a static variable
-	  
-		// Update our position
-	  // If cheese nearby
-		// Determine the shortest path to collect all the seen cheeses.
-		// Enqueue the steps to reach those cheeses
-		// Move based on the first item in the queue
-	  // If exit nearby
+	    // Remember where we are -- use a static variable
+	    // Update our position
+	}
+	// If exit nearby
+	else if (exit_loc.empty() == false)
+	{
 	    // Find path to the exit and enqueue it
-		// Pull the first item in the queue and move
-
+	    // Pull the first item in the queue and move
+	}
+	// If cheese nearby and no exits
+	else
+	{
+	    // Determine the shortest path to collect all the seen cheeses.
+	    // Enqueue the steps to reach those cheeses
+	    // Move based on the first item in the queue
+	}
+    }
     // If we didn't choose a direction, select one randomly.
     // This is a fallback to handle accidental code fallthrough, not a viable move strategy
     if (r == -1)
