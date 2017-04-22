@@ -49,7 +49,7 @@ void mouse_move()
     // Otherwise
     else
     {
-	// Look for all nearby cheeses
+	// Look for all nearby cheeses and exits
 	for (int i = 0; i < 3; ++i)
 	{
 	    for (int j = 0; j < 3; ++j)
