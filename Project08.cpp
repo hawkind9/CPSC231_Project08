@@ -96,7 +96,7 @@ void mouse_move()
 	    }
 	    else
 	    {
-		// Determine which paths are not backtracking (we just came from it)
+		// Determine which paths are not backtracking (we just came from it) //So if a value equals a previous value then we backtracked? Is that right?
 		// Pick one of the not-just-traveled-on paths, and go.
 
 		// TODO: Determine a way to handle an open room better
