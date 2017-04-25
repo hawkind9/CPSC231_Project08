@@ -113,6 +113,15 @@ void mouse_move()
 			{
 				r = dir_from_rel_loc(viable_loc[0]);
 			}
+			// Special case for two options
+			// Go the direction we didn't come from.
+			else if (variable_loc.size() == 2)
+			{
+				if (dir_from_rel_loc(viable_loc[0]) == last_move)
+					r = dir_from_rel_loc(viable_loc[1]);
+				else
+					r = dir_from_rel_loc(viable_loc[0]);
+			}
 			else
 			{
 				// Determine which paths are not backtracking (we just came from it) //So if a value equals a previous value then we backtracked? Is that right?
