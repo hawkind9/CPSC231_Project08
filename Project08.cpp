@@ -100,13 +100,13 @@ void mouse_move()
 		{
 			// Figure out which directions are allowable directions
 			if (map[1][0] == CELL_OPEN)
-			viable_loc.push_back({ 1, 0 });
+				viable_loc.push_back({ 1, 0 });
 			if (map[0][1] == CELL_OPEN)
-			viable_loc.push_back({ 0, 1 });
+				viable_loc.push_back({ 0, 1 });
 			if (map[1][2] == CELL_OPEN)
-			viable_loc.push_back({ 1, 2 });
+				viable_loc.push_back({ 1, 2 });
 			if (map[2][1] == CELL_OPEN)
-			viable_loc.push_back({ 2, 1 });
+				viable_loc.push_back({ 2, 1 });
 
 			// Only one option, then take it.
 			if (viable_loc.size() == 1)
