@@ -72,74 +72,74 @@ void mouse_move()
     // If we have queued directions
     if (!move_queue.empty())
     {
-	// Follow the next queued direction
-	r = move_queue.front();
-	// Remove the element we fetched.
-	move_queue.pop();
+		// Follow the next queued direction
+		r = move_queue.front();
+		// Remove the element we fetched.
+		move_queue.pop();
     }
     // Otherwise
     else
     {
-	// Look for all nearby cheeses and exits
-	for (int i = 0; i < 3; ++i)
-	{
-	    for (int j = 0; j < 3; ++j)
-	    {
-		// Keep track of where nearby cheeses are
-		if (map[i][j] == CELL_CHEESE)
+		// Look for all nearby cheeses and exits
+		for (int i = 0; i < 3; ++i)
 		{
-		    cheese_loc.push_back({ i, j });
+			for (int j = 0; j < 3; ++j)
+			{
+			// Keep track of where nearby cheeses are
+			if (map[i][j] == CELL_CHEESE)
+			{
+				cheese_loc.push_back({ i, j });
+			}
+			// Also track the exits nearby
+			else if (map[i][j] == CELL_EXIT)
+				exit_loc.push_back({ i, j });
+			}
 		}
-		// Also track the exits nearby
-		else if (map[i][j] == CELL_EXIT)
-		    exit_loc.push_back({ i, j });
-	    }
-	}
-	// If no cheese nearby and no exits nearby:
-	if (cheese_loc.empty() == true && exit_loc.empty() == true)
-	{
-	    // Figure out which directions are allowable directions
-	    if (map[1][0] == CELL_OPEN)
-		viable_loc.push_back({ 1, 0 });
-	    if (map[0][1] == CELL_OPEN)
-		viable_loc.push_back({ 0, 1 });
-	    if (map[1][2] == CELL_OPEN)
-		viable_loc.push_back({ 1, 2 });
-	    if (map[2][1] == CELL_OPEN)
-		viable_loc.push_back({ 2, 1 });
+		// If no cheese nearby and no exits nearby:
+		if (cheese_loc.empty() == true && exit_loc.empty() == true)
+		{
+			// Figure out which directions are allowable directions
+			if (map[1][0] == CELL_OPEN)
+			viable_loc.push_back({ 1, 0 });
+			if (map[0][1] == CELL_OPEN)
+			viable_loc.push_back({ 0, 1 });
+			if (map[1][2] == CELL_OPEN)
+			viable_loc.push_back({ 1, 2 });
+			if (map[2][1] == CELL_OPEN)
+			viable_loc.push_back({ 2, 1 });
 
-	    // Only one option, then take it.
-	    if (viable_loc.size() == 1)
-	    {
-			r = dir_from_rel_loc(viable_loc[0]);
-	    }
-	    else
-	    {
-		// Determine which paths are not backtracking (we just came from it) //So if a value equals a previous value then we backtracked? Is that right?
-		// Pick one of the not-just-traveled-on paths, and go.
+			// Only one option, then take it.
+			if (viable_loc.size() == 1)
+			{
+				r = dir_from_rel_loc(viable_loc[0]);
+			}
+			else
+			{
+				// Determine which paths are not backtracking (we just came from it) //So if a value equals a previous value then we backtracked? Is that right?
+				// Pick one of the not-just-traveled-on paths, and go.
 
-		// TODO: Determine a way to handle an open room better
-	    }
-	}
-	// If exit nearby
-	else if (exit_loc.empty() == false)
-	{
-	    // Find path to the exit and enqueue it
-	    // Pull the first item in the queue and move
-	}
-	// If cheese nearby and no exits
-	else
-	{
-	    // Determine the shortest path to collect all the seen cheeses.
-	    // Enqueue the steps to reach those cheeses
-	    // Move based on the first item in the queue
-	}
+				// TODO: Determine a way to handle an open room better
+			}
+		}
+		// If exit nearby
+		else if (exit_loc.empty() == false)
+		{
+			// Find path to the exit and enqueue it
+			// Pull the first item in the queue and move
+		}
+		// If cheese nearby and no exits
+		else
+		{
+			// Determine the shortest path to collect all the seen cheeses.
+			// Enqueue the steps to reach those cheeses
+			// Move based on the first item in the queue
+		}
     }
     // If we didn't choose a direction, select one randomly.
     // This is a fallback to handle accidental code fallthrough, not a viable move strategy
     if (r == -1)
     {
-	r = rand() % 4;
+		r = rand() % 4;
     }
     if(r==0) if(mouse_north()) row--;
     if(r==1) if(mouse_south()) row++;
