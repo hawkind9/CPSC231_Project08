@@ -16,6 +16,35 @@ void mouse_init(int x,int y)
   row = y;
 }
 
+/**
+ * get_dir_from_rel_loc()
+ * Return the relative direction (a determined at the bottom of
+ * mouse_move() to the direction moved) from the position in
+ * the map returned from mouse_look().
+ *
+ * @param loc
+ * The location we are calculating the direction for.
+ *
+ * @return
+ * 0 for north, 1 for south, 2 for east, 3 for west
+ *
+ * @note
+ * Behavior is not defined for diagonals.
+ */
+static int get_dir_from_rel_loc(const map_pos &loc)
+{
+	if (loc.x == 0)
+		return 0; // If x is zero, we are moving up.
+	else if (loc.x == 2)
+		return 1; // If x is two, we are moving down.
+	// In these cases, loc.x will be 1
+	else if (loc.y == 0)
+		return 3; // We move to the left if y is zero.
+	// Last case: loc.x == 1 && loc.y == 2
+	else
+		return 2; // Move to the right
+}
+
 /**************************************************************
  * mouse_move()
  * This function is called each timer tick.
@@ -82,17 +111,7 @@ void mouse_move()
 	    // Only one option, then take it.
 	    if (viable_loc.size() == 1)
 	    {
-		loc = viable_loc[0];
-		if (loc.x == 0)
-		    r = 0; // If x is zero, we are moving up.
-		else if (loc.x == 2)
-		    r = 1; // If x is two, we are moving down.
-		// In these cases, loc.x will be 1
-		else if (loc.y == 0)
-		    r = 3; // We move to the left if y is zero.
-		// Last case: loc.x == 1 && loc.y == 2
-		else
-		    r = 2; // Move to the right
+			r = dir_from_rel_loc(viable_loc[0]);
 	    }
 	    else
 	    {
