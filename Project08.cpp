@@ -85,14 +85,14 @@ void mouse_move()
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-			// Keep track of where nearby cheeses are
-			if (map[i][j] == CELL_CHEESE)
-			{
-				cheese_loc.push_back({ i, j });
-			}
-			// Also track the exits nearby
-			else if (map[i][j] == CELL_EXIT)
-				exit_loc.push_back({ i, j });
+				// Keep track of where nearby cheeses are
+				if (map[i][j] == CELL_CHEESE)
+				{
+					cheese_loc.push_back({ i, j });
+				}
+				// Also track the exits nearby
+				else if (map[i][j] == CELL_EXIT)
+					exit_loc.push_back({ i, j });
 			}
 		}
 		// If no cheese nearby and no exits nearby:
