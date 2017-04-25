@@ -2,6 +2,7 @@
 #include "Project08.h2"
 #include <queue>
 #include <vector>
+#include <cmath>
 
 /**************************************************************
  * mouse_init()
