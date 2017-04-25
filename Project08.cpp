@@ -169,6 +169,18 @@ void mouse_move()
 					else
 					{
 						// Check the north and east directions for a path
+						// First, check east
+						if (map[2][1] == CELL_OPEN)
+						{
+							r = 2;  	    // Go east
+							move_queue.push(0); // Enqueue a north move
+						}
+						// Then check north
+						else if (map[0][1] == CELL_OPEN)
+						{
+							r = 0;		   // Go north
+							move_queue.push(2); // Enqueue an east move
+						} 
 					}
 				}
 				else
@@ -177,10 +189,34 @@ void mouse_move()
 					if (exit_loc.y == 0)
 					{
 						// Check the south and west directions for a path
+						// First, check west
+						if(map[1][0] == CELL_OPEN)
+						{
+							r = 3; 		    // Go west
+							move_queue.push(1); // Enqueue a south move
+						}
+						// Then check south
+						else if(map[1][2] == CELL_OPEN)
+						{
+							r = 1;		    // Go south
+							move_queue.push(3); // Enqueue a west move
+						}
 					}
 					else
 					{
 						// Check the south and east directions for a path
+						// First, check east
+						if(map[2][1] == CELL_OPEN)
+						{
+							r = 2;            // Go east
+							move_queue.push(1); // Enqueue a south move
+						}
+						// Then check south
+						else if(map[1][2] == CELL_OPEN)
+						{
+							r = 1;		    // Go south
+							move_queue.push(2); // Enqueue an east move
+						}
 					}
 				}
 				// Pull the first item in the queue and move
