@@ -146,6 +146,43 @@ void mouse_move()
 			else
 			{
 				// Find path to the exit and enqueue it
+				// First, handle the northwest and northeast corners
+				if (exit_loc.x == 0)
+				{
+					// Northwest corner
+					if (exit_loc.y == 0)
+					{
+						// Check the north and west directions for a path.
+						// First, check west
+						if (map[1][0] == CELL_OPEN)
+						{
+							r = 3;              // Go west
+							move_queue.push(0); // Enqueue a north move
+						}
+						// Then check north
+						else if (map[0][1] == CELL_OPEN)
+						{
+							r = 0;              // Go north
+							move_queue.push(3); // Enqueue a west move
+						}
+					}
+					else
+					{
+						// Check the north and east directions for a path
+					}
+				}
+				else
+				{
+					// Southwest corner
+					if (exit_loc.y == 0)
+					{
+						// Check the south and west directions for a path
+					}
+					else
+					{
+						// Check the south and east directions for a path
+					}
+				}
 				// Pull the first item in the queue and move
 			}
 		}
