@@ -53,7 +53,7 @@ static int get_dir_from_rel_loc(const map_pos &loc)
 void mouse_move()
 {
     // Initialize the variable so we can tell if we accidentally fell through without choosing a direction
-    int r = -1;
+    int r = -1, i, move_index;
     cell map[3][3];
     // Declare some vectors so we can keep track of where cheese and exits are. Also one to determine where to go if nothing else is there
     std::vector<map_pos> cheese_loc, exit_loc, viable_loc;
@@ -127,9 +127,21 @@ void mouse_move()
 			{
 				// Determine which paths are not backtracking (we just came from it)
 				// Remove the path that can be equated to the direction we came from
-				
+				for (i = 0; i < viable_loc.length(); ++i)
+					if (dir_from_rel_loc(viable_loc[i]) == last_move)
+					{
+						move_index = i;
+						break; // We found it, don't keep searching
+					}
 				// Pick one of the not-just-traveled-on paths, and go.
-
+				// Recycle i, since we only need a temp variable
+				i = rand() % (viable_loc.length() - 1);
+				// If the index is at or beyond the index we skipped, increment the index
+				// to bypass the index we are skipping. also why we did MOD (LEN - 1)
+				if (i >= move_index)
+					++i;
+				// Set our direction accordingly
+				r = dir_from_rel_loc(viable_loc[i]);
 				// TODO: Determine a way to handle an open room better
 			}
 		}
