@@ -219,7 +219,6 @@ void mouse_move()
 						}
 					}
 				}
-				// Pull the first item in the queue and move
 			}
 		}
 		// If cheese nearby and no exits
