@@ -236,9 +236,16 @@ void mouse_move()
 		// If cheese nearby and no exits
 		else
 		{
-			// Determine the shortest path to collect all the seen cheeses.
-			// Enqueue the steps to reach those cheeses
-			// Move based on the first item in the queue
+			if (cheese_loc.size() == 1)
+			{
+				// Handle like the exit -- path to the one item.
+			}
+			else
+			{
+				// Determine the shortest path to collect all the seen cheeses.
+				// Enqueue the steps to reach those cheeses
+				// Move based on the first item in the queue
+			}
 		}
     }
     // If we didn't choose a direction, select one randomly.
