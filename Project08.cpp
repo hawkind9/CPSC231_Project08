@@ -53,7 +53,7 @@ static int get_dir_from_rel_loc(const map_pos &loc)
 void mouse_move()
 {
     // Initialize the variable so we can tell if we accidentally fell through without choosing a direction
-    int r = -1, i, move_index;
+    int r = -1, move_index;
     cell map[3][3];
     // Declare some vectors so we can keep track of where cheese and exits are. Also one to determine where to go if nothing else is there
     std::vector<map_pos> cheese_loc, exit_loc, viable_loc;
