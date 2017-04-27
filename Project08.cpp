@@ -335,7 +335,16 @@ void mouse_move()
 					else
 					{
 						// We are going from old_loc to the next loc.
-						// TODO: Determine how to calculate this
+						if (old_loc.x != 0)
+						{
+							if (old_loc.y != 0)
+								if (loc[old_loc.x - 1][old_loc.y - 1] == MAP_CHEESE)
+									move_queue.push(get_dir_from_rel_loc(loc[old_loc.x - 1][old_loc.y - 1]));
+						}
+						else if (old_loc.x == 2)
+						{
+						
+						}
 					}
 				}
 				// Move based on the first item in the queue
