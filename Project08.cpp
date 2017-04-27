@@ -58,7 +58,7 @@ void mouse_move()
     // Declare some vectors so we can keep track of where cheese and exits are. Also one to determine where to go if nothing else is there
     std::vector<map_pos> cheese_loc, exit_loc, viable_loc;
     // Temp variable for determining direction based on the stored location.
-    map_pos loc;
+    map_pos loc, old_loc = {-1, -1};
     int i, j;
     // This move queue is only in the scope of this function, and it allows us to enqueue commands between runs of this function.
     // Declared static so that we don't erase the data on every run of mouse_move().
@@ -239,12 +239,108 @@ void mouse_move()
 			if (cheese_loc.size() == 1)
 			{
 				// Handle like the exit -- path to the one item.
+				// TODO: Implement
 			}
 			else
 			{
-				// Determine the shortest path to collect all the seen cheeses.
-				// Enqueue the steps to reach those cheeses
+				// Determine a path to collect all the seen cheeses.
+				for (i = 0; i < cheese_loc; ++i)
+				{
+					// Enqueue the steps to reach those cheeses
+					loc = cheese_loc[i];
+					if (old_loc.x == -1)
+					{
+						// Handle from [1,1] if we haven't parsed any yet
+						if (abs(loc.x - loc.y) == 1)
+							move_queue.push(get_dir_from_rel_loc(loc));
+						else
+						{
+							// Do like the exits for diagonals
+							// Find path to the cheese and enqueue it
+							// First, handle the northwest and northeast corners
+							if (loc.x == 0)
+							{
+								// Northwest corner
+								if (loc.y == 0)
+								{
+									// Check the north and west directions for a path.
+									// First, check west
+									if (map[1][0] == CELL_OPEN)
+									{
+										move_queue.push(3); // Go west
+										move_queue.push(0); // Enqueue a north move
+									}
+									// Then check north
+									else if (map[0][1] == CELL_OPEN)
+									{
+										move_queue.push(0); // Go north
+										move_queue.push(3); // Enqueue a west move
+									}
+								}
+								else
+								{
+									// Check the north and east directions for a path
+									// First, check east
+									if (map[2][1] == CELL_OPEN)
+									{
+										move_queue.push(2); // Go east
+										move_queue.push(0); // Enqueue a north move
+									}
+									// Then check north
+									else if (map[0][1] == CELL_OPEN)
+									{
+										move_queue.push(0); // Go north
+										move_queue.push(2); // Enqueue an east move
+									} 
+								}
+							}
+							else
+							{
+								// Southwest corner
+								if (loc.y == 0)
+								{
+									// Check the south and west directions for a path
+									// First, check west
+									if(map[1][0] == CELL_OPEN)
+									{
+										move_queue.push(3); // Go west
+										move_queue.push(1); // Enqueue a south move
+									}
+									// Then check south
+									else if(map[1][2] == CELL_OPEN)
+									{
+										move_queue.push(1); // Go south
+										move_queue.push(3); // Enqueue a west move
+									}
+								}
+								else
+								{
+									// Check the south and east directions for a path
+									// First, check east
+									if(map[2][1] == CELL_OPEN)
+									{
+										move_queue.push(2); // Go east
+										move_queue.push(1); // Enqueue a south move
+									}
+									// Then check south
+									else if(map[1][2] == CELL_OPEN)
+									{
+										move_queue.push(1);	// Go south
+										move_queue.push(2); // Enqueue an east move
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						// We are going from old_loc to the next loc.
+						// TODO: Determine how to calculate this
+					}
+				}
 				// Move based on the first item in the queue
+				r = move_queue.front();
+				move_queue.pop();
 			}
 		}
     }
