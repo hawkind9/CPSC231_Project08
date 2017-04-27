@@ -366,15 +366,46 @@ void mouse_move()
 									}
 									else if (map[old_loc.x][old_loc.y + 1] == CELL_OPEN)
 									{
-										move_queue.push(get_dir_from_rel_loc( { 1, 0 } ));
-										move_queue.push(get_dir_from_rel_loc( { 2, 1 } ));
+										move_queue.push(get_dir_from_rel_loc( { 1, 2 } ));
+										move_queue.push(get_dir_from_rel_loc( { 0, 1 } ));
 									}
 								}
 							}
 						}
-						else if (old_loc.x == 2)
+						else if (old_loc.x != 2)
 						{
-						
+							if (old_loc.y != 0)
+								if (map[old_loc.x + 1][old_loc.y - 1] == CELL_CHEESE)
+								{
+									// Again, try the "corners" to get there.
+									if (map[old_loc.x + 1][old_loc.y] == CELL_OPEN)
+									{
+										move_queue.push(get_dir_from_rel_loc( { 2, 1 } )); // Inline structure declaration
+										move_queue.push(get_dir_from_rel_loc( { 1, 0 } ));
+									}
+									else if (map[old_loc.x][old_loc.y - 1] == CELL_OPEN)
+									{
+										move_queue.push(get_dir_from_rel_loc( { 1, 0 } ));
+										move_queue.push(get_dir_from_rel_loc( { 2, 1 } ));
+									}
+								}
+							else if (old_loc.y != 2)
+							{
+								if (map[old_loc.x + 1][old_loc.y + 1] == CELL_CHEESE)
+								{
+									// Again, try the "corners" to get there.
+									if (map[old_loc.x + 1][old_loc.y] == CELL_OPEN)
+									{
+										move_queue.push(get_dir_from_rel_loc( { 2, 1 } )); // Inline structure declaration
+										move_queue.push(get_dir_from_rel_loc( { 1, 2 } ));
+									}
+									else if (map[old_loc.x][old_loc.y + 1] == CELL_OPEN)
+									{
+										move_queue.push(get_dir_from_rel_loc( { 1, 2 } ));
+										move_queue.push(get_dir_from_rel_loc( { 2, 1 } ));
+									}
+								}
+							}
 						}
 					}
 				}
