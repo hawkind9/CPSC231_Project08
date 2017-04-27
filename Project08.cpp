@@ -19,7 +19,7 @@ void mouse_init(int x,int y)
 
 /**
  * get_dir_from_rel_loc()
- * Return the relative direction (a determined at the bottom of
+ * Return the relative direction (as determined at the bottom of
  * mouse_move() to the direction moved) from the position in
  * the map returned from mouse_look().
  *
@@ -112,36 +112,36 @@ void mouse_move()
 			// Only one option, then take it.
 			if (viable_loc.size() == 1)
 			{
-				r = dir_from_rel_loc(viable_loc[0]);
+				r = get_dir_from_rel_loc(viable_loc[0]);
 			}
 			// Special case for two options
 			// Go the direction we didn't come from.
 			else if (viable_loc.size() == 2)
 			{
-				if (dir_from_rel_loc(viable_loc[0]) == last_move)
-					r = dir_from_rel_loc(viable_loc[1]);
+				if (get_dir_from_rel_loc(viable_loc[0]) == last_move)
+					r = get_dir_from_rel_loc(viable_loc[1]);
 				else
-					r = dir_from_rel_loc(viable_loc[0]);
+					r = get_dir_from_rel_loc(viable_loc[0]);
 			}
 			else
 			{
 				// Determine which paths are not backtracking (we just came from it)
 				// Remove the path that can be equated to the direction we came from
-				for (i = 0; i < viable_loc.length(); ++i)
-					if (dir_from_rel_loc(viable_loc[i]) == last_move)
+				for (i = 0; i < viable_loc.size(); ++i)
+					if (get_dir_from_rel_loc(viable_loc[i]) == last_move)
 					{
 						move_index = i;
 						break; // We found it, don't keep searching
 					}
 				// Pick one of the not-just-traveled-on paths, and go.
 				// Recycle i, since we only need a temp variable
-				i = rand() % (viable_loc.length() - 1);
+				i = rand() % (viable_loc.size() - 1);
 				// If the index is at or beyond the index we skipped, increment the index
 				// to bypass the index we are skipping. also why we did MOD (LEN - 1)
 				if (i >= move_index)
 					++i;
 				// Set our direction accordingly
-				r = dir_from_rel_loc(viable_loc[i]);
+				r = get_dir_from_rel_loc(viable_loc[i]);
 				// TODO: Determine a way to handle an open room better
 			}
 		}
@@ -154,7 +154,7 @@ void mouse_move()
 			// is 1 for all cardinal direction movement
 			if (abs(loc.x - loc.y) == 1)
 				// The exit is next to us, just move to it.
-				r = dir_from_rel_loc(loc);
+				r = get_dir_from_rel_loc(loc);
 			else
 			{
 				// Find path to the exit and enqueue it
