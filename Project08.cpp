@@ -239,7 +239,13 @@ void mouse_move()
 			if (cheese_loc.size() == 1)
 			{
 				// Handle like the exit -- path to the one item.
-				// TODO: Implement
+				// Don't worry about multiple exits -- try to reach the first.
+				loc = exit_loc[0];
+				// The absolute value of the difference of the relative coordinates
+				// is 1 for all cardinal direction movement
+				if (abs(loc.x - loc.y) == 1)
+					// The exit is next to us, just move to it.
+					r = get_dir_from_rel_loc(loc);
 			}
 			else
 			{
