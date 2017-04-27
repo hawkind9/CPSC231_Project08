@@ -159,10 +159,10 @@ void mouse_move()
 			{
 				// Find path to the exit and enqueue it
 				// First, handle the northwest and northeast corners
-				if (exit_loc.x == 0)
+				if (loc.x == 0)
 				{
 					// Northwest corner
-					if (exit_loc.y == 0)
+					if (loc.y == 0)
 					{
 						// Check the north and west directions for a path.
 						// First, check west
@@ -198,7 +198,7 @@ void mouse_move()
 				else
 				{
 					// Southwest corner
-					if (exit_loc.y == 0)
+					if (loc.y == 0)
 					{
 						// Check the south and west directions for a path
 						// First, check west
